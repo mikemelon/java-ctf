@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/element-ui/lib/theme-chalk/index.css"/>
+    <script type="text/javascript" src="/webjars/vue/dist/vue.min.js"></script>
+    <script type="text/javascript" src="/webjars/element-ui/lib/index.js"></script>
+    <style>
+        body{
+            margin:0;
+            padding 0;
+            font-size: 12px;
+        }
+    </style>
+    <title>更新挑战</title>
+</head>
+<body>
+    <form name="myform">
+    	<label for="challengeid">编号：</label><span id="challengeid"></span><br>
+        <label for="name">题目：</label> <input name="name" id="name" type="text" placeholder="题目"><br>
+        
+        <label for="category_list">分类：</label>
+        	<select id="category_list" name="category_list" >
+				<option v-for="item in categories" :value ="item.id">{{item.name}}</option>
+			</select>
+        <br>
+        
+        <label for="content">内容：</label> <textarea name="content" id="content" placeholder="内容"></textarea><br>
+        
+        <button id="updatebutton" name="updatebutton" onclick="updateChallenge()">更新挑战</button>
+    </form>
+    <script>
+        var app = new Vue({
+	        el: "#category_list",
+	        data: {
+	            categories: [],
+	            havedata: false,
+	        },
+    	});
+
+        function selectWithValue(v){
+			var categoryDropdown=document.getElementById("category_list");
+			for(var i=0;i<categoryDropdown.length;i++){
+				if(categoryDropdown[i].value==v){
+					categoryDropdown[i].selected="selected";
+				}
+			}
+		}
+		
+	    function getAllCategories() {
+	        fetch("categories")
+	            .then((resp) => {
+	                return resp.json();
+	            })
+	            .then((categories) => {
+	                app.categories = categories;
+	                app.havedata = (app.categories.length > 0);
+	            });
+	    }
+	    
+	    getAllCategories();
+
+        var challenge_id;
+    	function getCurChallenge(){
+	    	//获取Location对象的search属性值
+			var searchStr = location.search;
+			searchStr = searchStr.substr(1);  //由于searchStr属性值包括“?”，所以除去该字符
+			var searchs = searchStr.split("&");//将searchStr字符串分割成数组，数组中的每一个元素为一个参数和参数值
+			var id_value = searchs[0].split("=");//获得第一个参数和值
+			challenge_id = id_value[1];
+			document.getElementById("challengeid").innerHTML=challenge_id;
+			fetch("challenge/"+challenge_id)
+			.then((resp) => {
+                return resp.json();
+            })
+            .then((challenge) => {
+                myform.name.value=challenge.name;
+                myform.content.value=challenge.content;
+                console.log(challenge);
+                //alert(challenge.categoryId);
+                selectWithValue(challenge.categoryId);
+            });
+		}
+		
+		getCurChallenge();
+
+    
+        function updateChallenge(){
+            fetch("challenge",{
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                		id: challenge_id,
+	                    name:myform.name.value,
+	                    content:myform.content.value,
+	                    category_id:myform.category_list.value
+	                }),
+	            })
+                .then(function(){
+                    location.href="listchallenges.html"
+                });
+        }
+        
+    </script>
+</body>
+</html>

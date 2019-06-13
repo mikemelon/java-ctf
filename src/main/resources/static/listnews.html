@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新闻列表</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/vue/dist/vue.min.js"></script>
+</head>
+<body>
+<table id="testTable" class="table table-striped table-bordered" style="width:80%; margin: 0 auto;" v-if="havedata">
+    <caption>新闻列表</caption>
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>新闻标题</th>
+        <th>新闻内容</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="template" v-for="item in news" :key="item.id">
+        <td>{{item.id}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.content}}</td>
+        <td id="operation">
+        <input type='button' class="btn btn-default" value='更新' @click='updateNews(item.id)'>
+        <input type='button' class="btn btn-danger" value='删除' @click='deleteNews(item.id)'></td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    var app = new Vue({
+        el: "#testTable",
+        data: {
+            news: [],
+            havedata: false,
+        },
+        methods: {
+        	updateNews: function(id) {
+        		updateNews(id);
+        	},
+            deleteNews: function (id) {
+                deleteNews(id);
+            }
+        },
+    });
+
+    getAll();
+
+    function getAll() {
+        fetch("news")
+            .then((resp) => {
+                return resp.json();
+            })
+            .then((news) => {
+                app.news = news;
+                app.havedata = (app.news.length > 0);
+            });
+    }
+
+    function updateNews(id){
+        location.href="updatenews.html?id="+id;
+    }
+    function deleteNews(id){
+        fetch("news/"+id,{method:"DELETE"})
+            .then((resp)=>{
+                getAll();
+            });
+    }
+
+</script>
+</body>
+</html>

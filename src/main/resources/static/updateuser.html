@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style>
+        body{
+            margin:0;
+            padding 0;
+            font-size: 12px;
+        }
+    </style>
+    <title>更新用户</title>
+</head>
+<body>
+    <form name="myform" action="updateuser" method="post">
+    	<label for="userid">编号：</label><span id="userid"></span><br>
+        <label for="username">用户名：</label> <input name="username" id="username" type="text" placeholder="用户名">
+        <label for="password">密码：</label> <input name="password" id="password" type="password" placeholder="新密码">
+        <label for="password2">再输入一遍新密码：</label> <input name="password2" id="password2" type="password" placeholder="再输入一遍新密码">
+        <button id="updatebutton" name="updatebutton" onclick="udpate()">更新用户信息</button>
+    </form>
+    <script>
+        var user_id;
+    	function getCurUser(){
+	    	//获取Location对象的search属性值
+			var searchStr = location.search;
+			searchStr = searchStr.substr(1);  //由于searchStr属性值包括“?”，所以除去该字符
+			var searchs = searchStr.split("&");//将searchStr字符串分割成数组，数组中的每一个元素为一个参数和参数值
+			var id_value = searchs[0].split("=");//获得第一个参数和值
+			user_id = id_value[1];
+			document.getElementById("userid").innerHTML=user_id;
+			fetch("user/"+user_id)
+			.then((resp) => {
+                return resp.json();
+            })
+            .then((user) => {
+                myform.username.value=user.username;
+            });
+		}
+		
+		getCurUser();
+		
+        function udpate(){
+            fetch("user",{
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                	id:user_id,
+                    username:myform.username.value,
+                    password:myform.password.value,
+                })
+            })
+                .then(function(){
+                    location.href="listusers.html"
+                });
+        }
+    </script>
+</body>
+</html>

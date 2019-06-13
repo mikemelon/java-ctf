@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/element-ui/lib/theme-chalk/index.css"/>
+    <script type="text/javascript" src="/webjars/vue/dist/vue.min.js"></script>
+    <script type="text/javascript" src="/webjars/element-ui/lib/index.js"></script>
+    <style>
+        body{
+            margin:0;
+            padding 0;
+            font-size: 12px;
+        }
+    </style>
+    <title>添加挑战</title>
+</head>
+<body>
+    <form name="myform">
+        <label for="name">题目：</label> <input name="name" id="name" type="text" placeholder="题目"><br>
+        
+        <label for="category_list">分类：</label>
+        	<select id="category_list" name="category_list" >
+				<option v-for="item in categories" :value ="item.id">{{item.name}}</option>
+			</select>
+        <br>
+        
+        <label for="content">内容：</label> <textarea name="content" id="content" placeholder="内容"></textarea><br>
+        
+        <button id="addbutton" name="addbutton" onclick="addChallenge()">添加挑战</button>
+    </form>
+    <script>
+        var app = new Vue({
+	        el: "#category_list",
+	        data: {
+	            categories: [],
+	            havedata: false,
+	        },
+    	});
+
+    	getAllCategories();
+
+	    function getAllCategories() {
+	        fetch("categories")
+	            .then((resp) => {
+	                return resp.json();
+	            })
+	            .then((categories) => {
+	                app.categories = categories;
+	                app.havedata = (app.categories.length > 0);
+	            });
+	    }
+    
+        function addChallenge(){
+            fetch("challenge",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+	                    name:myform.name.value,
+	                    content:myform.content.value,
+	                    category_id:myform.category_list.value
+	                }),
+	            })
+                .then(function(){
+                    location.href="listchallenges.html"
+                });
+        }
+    </script>
+</body>
+</html>

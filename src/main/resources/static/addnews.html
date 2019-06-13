@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style>
+        body{
+            margin:0;
+            padding 0;
+            font-size: 12px;
+        }
+    </style>
+    <title>添加新闻</title>
+</head>
+<body>
+    <form name="myform" action="addcategory" method="post">
+        <label for="title">新闻题目：</label> <input name="title" id="title" type="text" placeholder="新闻名称"><br>
+        <label for="content">新闻内容：</label> <textarea name="content" id="content" type="text" placeholder="新闻内容"></textarea>
+        <button id="addbutton" name="addbutton" onclick="add()">新增新闻</button>
+    </form>
+    <script>
+        function add(){
+            fetch("news",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                    title:myform.title.value,
+                    content:myform.content.value,
+                })
+            })
+                .then(function(){
+                    location.href="listnews.html"
+                });
+        }
+    </script>
+</body>
+</html>
