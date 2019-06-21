@@ -23,9 +23,9 @@ public interface AttachFileMapper {
 	@Delete("DELETE attachfile WHERE ID = #{id}")
 	int deleteAttachFileById(@Param("id")int id);
 	
-	@Insert("INSERT INTO attachfile(challenge_id,filename, filelocation, uploadtime) VALUES ( #{attachfile.challenge.id}, #{attachfile.fileName}, #{attachfile.fileLocation), #{attachfile.uploadTime}")
-	int insertAttachFile(@Param("attachfile")AttachFile attachfile);
+	@Insert("INSERT INTO attachfile(challenge_id,filename, filelocation, uploadtime) VALUES ( #{attachfile.challenge.id}, #{attachfile.fileName}, #{attachfile.fileLocation}, #{attachfile.uploadTime} )")
+	int insertAttachFile(@Param("attachfile") AttachFile attachFile);
 	
-	@Update("UPDATE attachfile SET challenge_id={attachfile.challenge.id}, filename=#{attachfile.fileName}, filelocation=#{attachfile.fileLocation}, uploadtime=#{attachfile.uploadTime} WHERE ID = #{attachfile.id}")
-	int updateAttachFile(@Param("attachfile")AttachFile attachfile);
+	@Update("UPDATE attachfile SET challenge_id=#{attachfile.challenge.id}, filename=#{attachfile.fileName}, filelocation=#{attachfile.fileLocation}, uploadtime=#{attachfile.uploadTime} WHERE ID = #{attachfile.id}")
+	int updateAttachFile(@Param("attachfile") AttachFile attachFile);
 }

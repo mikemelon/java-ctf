@@ -1,5 +1,6 @@
 package cn.edu.lynu.javactf.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,12 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.edu.lynu.javactf.exception.AttachFileNotFoundException;
 import cn.edu.lynu.javactf.model.AttachFile;
 import cn.edu.lynu.javactf.service.AttachFileService;
+import cn.edu.lynu.javactf.service.ChallengeService;
 
 @RestController
 public class AttachFileController {
 	private static Logger logger = LoggerFactory.getLogger(AttachFileController.class);
 	@Autowired
 	private AttachFileService attachFileService;
+	@Autowired
+	private ChallengeService challengeService;
 	
 	@GetMapping(value = "/attachfiles")
 	public List<AttachFile> findAllAttachFiles() {
@@ -37,6 +41,8 @@ public class AttachFileController {
 	
 	@PostMapping("/attachfile")
 	public void addAttachFile(@RequestBody @Valid AttachFile attachFile) {
+		attachFile.setChallenge(challengeService.getChallengeById(65));//just for test!
+		attachFile.setUploadTime(new Date());
 		logger.info("add attachfile:{}", attachFile);
 		attachFileService.save(attachFile);
 	}
