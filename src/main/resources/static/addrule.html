@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style>
+        body{
+            margin:0;
+            padding 0;
+            font-size: 12px;
+        }
+    </style>
+    <title>添加规则</title>
+</head>
+<body>
+    <form name="myform" action="addrule" method="post">
+        <label for="name">规则名称：</label> <input name="name" id="name" type="text" placeholder="规则名称">
+        <label for="name">规则内容：</label> <textarea name="content" id="content" placeholder="规则内容"></textarea>
+        <button id="addbutton" name="addbutton" onclick="add()">新增规则</button>
+    </form>
+    <script>
+        function add(){
+            fetch("rule",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                    name:myform.name.value,
+                    content:myform.content.value,
+                })
+            })
+                .then(function(){
+                    location.href="listrules.html"
+                });
+        }
+    </script>
+</body>
+</html>
