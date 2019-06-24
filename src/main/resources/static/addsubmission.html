@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style>
+        body{
+            margin:0;
+            padding 0;
+            font-size: 12px;
+        }
+    </style>
+    <title>添加提交</title>
+</head>
+<body>
+    <form name="myform" action="addsubmission" method="post">
+        <label for="content">提交内容：</label> <input name="content" id="content" type="text" placeholder="提交内容（填写flag）">
+        <br>
+        <label for="correct">是否正确：</label> 
+        	<fieldset id="correct">
+        	<input name="correct" id="correct" type="radio" value="true">对
+        	<input name="correct" id="correct" type="radio" value="false">错
+        	</fieldset>
+        <button id="addbutton" name="addbutton" onclick="add()">新增提交</button>
+    </form>
+    <script>
+        function add(){
+            fetch("submission",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                    content:myform.content.value,
+                    correct:myform.correct.value,
+                })
+            })
+                .then(function(){
+                    location.href="listsubmissions.html"
+                });
+        }
+    </script>
+</body>
+</html>

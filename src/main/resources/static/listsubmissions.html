@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提交列表</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/vue/dist/vue.min.js"></script>
+</head>
+<body>
+<table id="testTable" class="table table-striped table-bordered" style="width:80%; margin: 0 auto;" v-if="havedata">
+    <caption>提交列表</caption>
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>提交者</th>
+        <th>提交题目</th>
+        <th>提交类别</th>
+        <th>提交内容</th>
+        <th>正确与否</th>
+        <th>提交时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="template" v-for="item in submissions" :key="item.id">
+        <td>{{item.id}}</td>
+        <td>{{item.user.username}}</td>
+        <td>{{item.challenge.name}}</td>
+        <td>{{item.challenge.category.name}}</td>
+        <td>{{item.content}}</td>
+        <td>{{item.correct}}</td>
+        <td>{{item.submitTime}}</td>
+        <td id="operation">
+        <input type='button' class="btn btn-default" value='更新' @click='updateSubmission(item.id)'>
+        <input type='button' class="btn btn-danger" value='删除' @click='deleteSubmission(item.id)'></td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    var app = new Vue({
+        el: "#testTable",
+        data: {
+            submissions: [],
+            havedata: false,
+        },
+        methods: {
+            updateSubmission: function (id) {
+                updateSubmission(id);
+            },
+            deleteSubmission: function (id) {
+                deleteSubmission(id);
+            }
+        },
+    });
+
+    getAll();
+
+    function getAll() {
+        fetch("submissions")
+            .then((resp) => {
+                return resp.json();
+            })
+            .then((submissions) => {
+                app.submissions = submissions;
+                app.havedata = (app.submissions.length > 0);
+            });
+    }
+    
+    function deleteSubmission(id){
+    	location.href="updatesubmission.html?id="+id;
+    }
+
+    function deleteSubmission(id){
+        fetch("submission/"+id,{method:"DELETE"})
+            .then((resp)=>{
+                getAll();
+            });
+    }
+
+</script>
+</body>
+</html>
