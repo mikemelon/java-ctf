@@ -15,7 +15,7 @@ import cn.edu.lynu.javactf.model.ChallengeExtended;
 @Mapper
 public interface ChallengeMapper {
 	
-	@Select("SELECT challenge.*, category.name as category_name FROM challenge,category where challenge.category_id=category.id")
+	@Select("SELECT challenge.*, category.name as category_name FROM challenge,category WHERE challenge.category_id=category.id")
 	List<ChallengeExtended> getAllChallenges();
 	
 	@Select("SELECT challenge.*, category_id as categoryId FROM challenge WHERE ID=#{id}")
