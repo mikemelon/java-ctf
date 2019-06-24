@@ -16,10 +16,10 @@
     <title>添加操作日志</title>
 </head>
 <body>
-    <form name="myform" action="addcategory" method="post">
+    <form name="myform" action="addoperationlog" method="post">
         <label for="ipaddress">操作IP：</label> <input name="ipaddress" id="ipaddress" type="text" placeholder="操作IP">
         <label for="description">操作描述：</label> <input name="description" id="description" type="text" placeholder="操作描述">
-        <button id="addbutton" name="addbutton" onclick="add()">新增操作日志</button>
+        <button id="addbutton" name="addbutton" type="button" onclick="add()">新增操作日志</button>
     </form>
     <script>
         function add(){
