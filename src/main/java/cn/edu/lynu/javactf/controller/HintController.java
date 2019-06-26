@@ -45,7 +45,7 @@ public class HintController {
 	@PostMapping("/hint")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void addHint(@RequestBody @Valid Hint hint) {
-		hint.setChallenge(challengeService.getChallengeById(1));
+		hint.setChallenge(challengeService.getChallengeById(34));
 		logger.info("add hint:{}", hint);
 		hintService.save(hint);
 	}

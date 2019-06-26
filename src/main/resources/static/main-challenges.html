@@ -101,9 +101,9 @@
             <div class="am-g">
                 <div class="am-u-lg-10 am-u-md-9 am-u-sm-9 am-u-end am-u-lg-centered am-u-md-centered am-u-sm-centered">
                     <ul class="am-avg-lg-3 am-avg-md-2 am-avg-sm-1">
-                        <li class="box">
-                            <div class="am-panel am-panel-primary ">
-                                <div class="am-panel-hd am-text-center" data-am-modal="{target: '#my-alert'}" style="cursor:pointer;">BABYBANK</div>
+                        <li class="box" >
+                            <div class="am-panel-primary"  style="cursor:pointer;" data-am-modal="{target: '#my-alert',closeViaDimmer: 0}">
+                                <div class="am-panel-hd am-text-center" style="border-radius:10px 10px  0 0;">BABYBANK</div>
                                 <div class="am-panel-bd content-box">
                                     <div class="am-text-center"><span style="color:#fff">(201 Solved)</span></div>
                                     <div style="float:right;padding-right: 10px;">
@@ -137,7 +137,7 @@
                         </li>
 
                         <li class="box">
-                            <div class="am-panel am-panel-danger">
+                            <div class="am-panel am-panel-danger" style="border-radius:10px;">
                                 <div class="am-panel-hd">面板标题2</div>
                                 <div class="am-panel-bd content-box">
                                     面板内容2
@@ -146,7 +146,7 @@
                         </li>
 
                         <li class="box">
-                            <div class="am-panel am-panel-warning">
+                            <div class="am-panel am-panel-warning" style="border-radius:10px;">
                                 <div class="am-panel-hd">面板标题3</div>
                                 <div class="am-panel-bd content-box">
                                     面板内容3
@@ -155,7 +155,7 @@
                         </li>
 
                         <li class="box">
-                            <div class="am-panel am-panel-secondary">
+                            <div class="am-panel am-panel-secondary" style="border-radius:10px;">
                                 <div class="am-panel-hd">面板标题4</div>
                                 <div class="am-panel-bd content-box">
                                     面板内容4
@@ -164,7 +164,7 @@
                         </li>
 
                         <li class="box">
-                            <div class="am-panel am-panel-success">
+                            <div class="am-panel am-panel-success" style="border-radius:10px;">
                                 <div class="am-panel-hd">面板标题5</div>
                                 <div class="am-panel-bd content-box">
                                     面板内容5
@@ -190,12 +190,49 @@
 <!--模态对话框-->
 <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd">BABYBANK</div>
+        <div class="am-modal-hd" style="border-bottom: 1px dashed #be590a;">BABYBANK</div>
         <div class="am-modal-bd">
-            这是一道MISC题，请给出你的Flag！
+            <div class="am-g am-margin-top-sm">
+                <div class="am-u-sm-12">
+                    <form class="am-form am-form-horizontal">
+                        <div class="am-form-group">
+                            <div class="am-u-sm-12">
+                                <span>这是一道MISC题，请给出你的Flag！</span>
+                                <button class="am-btn am-btn-primary">点击下载附件</button>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-3 am-form-label" for="inputFlag">flag:</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="inputFlag" id="inputFlag" placeholder="flag{...}">
+                                <small>输入你的答案。</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group" style="margin:0 5px 0 5px;">
+                            <label class="am-u-sm-1 am-form-label  am-text-right" for="tip0">
+                                <i class="am-icon-lightbulb-o am-icon-sm am-icon-fw" style="color:sandybrown;"></i>
+                            </label>
+                            <div class="am-u-sm-11 am-text-left" id="tip0">
+                                <small>163,qq邮箱可能存在接收不到flag的问题，请使用gmail邮箱。</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group" style="margin:0 5px 0 5px;">
+                            <label class="am-u-sm-1 am-form-label am-text-right" for="tip1">
+                                <i class="am-icon-lightbulb-o am-icon-sm am-icon-fw" style="color:sandybrown;"></i>
+                            </label>
+                            <div class="am-u-sm-11 am-text-left" id="tip1">
+                                <small>使用邮件发送flag。</small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="am-modal-footer">
-            <span class="am-modal-btn">确定</span>
+            <span class="am-modal-btn">关闭</span>
         </div>
     </div>
 </div>
