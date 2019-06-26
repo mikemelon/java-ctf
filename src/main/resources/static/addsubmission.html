@@ -13,26 +13,33 @@
             font-size: 12px;
         }
     </style>
-    <title>添加分类</title>
+    <title>添加提交</title>
 </head>
 <body>
-    <form name="myform" action="addcategory" method="post">
-        <label for="name">分类名称：</label> <input name="name" id="name" type="text" placeholder="分类名称">
-        <button id="addbutton" name="addbutton"  type="button" onclick="add()">新增分类</button>
+    <form name="myform" action="addsubmission" method="post">
+        <label for="content">提交内容：</label> <input name="content" id="content" type="text" placeholder="提交内容（填写flag）">
+        <br>
+        <label for="correct">是否正确：</label> 
+        	<fieldset id="correct">
+        	<input name="correct" id="correct" type="radio" value="true">对
+        	<input name="correct" id="correct" type="radio" value="false">错
+        	</fieldset>
+        <button id="addbutton" name="addbutton"  type="button" onclick="add()">新增提交</button>
     </form>
     <script>
         function add(){
-            fetch("category",{
+            fetch("submission",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",
                 },
                 body:JSON.stringify({
-                    name:myform.name.value,
+                    content:myform.content.value,
+                    correct:myform.correct.value,
                 })
             })
                 .then(function(){
-                    location.href="listcategories.html"
+                    location.href="listsubmissions.html"
                 });
         }
     </script>

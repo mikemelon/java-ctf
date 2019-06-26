@@ -13,29 +13,28 @@
             font-size: 12px;
         }
     </style>
-    <title>添加用户</title>
+    <title>添加规则</title>
 </head>
 <body>
-    <form name="myform" action="adduser" method="post">
-        <label for="username">用户名：</label> <input name="username" id="username" type="text" placeholder="用户名">
-        <label for="password">密码：</label> <input name="password" id="password" type="password" placeholder="密码">
-        <label for="password2">再输入一遍密码：</label> <input name="password2" id="password2" type="password" placeholder="再输入一遍密码">
-        <button id="regbutton" name="regbutton"  type="button" onclick="reg()">开始注册</button>
+    <form name="myform" action="addrule" method="post">
+        <label for="name">规则名称：</label> <input name="name" id="name" type="text" placeholder="规则名称">
+        <label for="name">规则内容：</label> <textarea name="content" id="content" placeholder="规则内容"></textarea>
+        <button id="addbutton" name="addbutton" type="button" onclick="add()">新增规则</button>
     </form>
     <script>
-        function reg(){
-            fetch("user",{
+        function add(){
+            fetch("rule",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",
                 },
                 body:JSON.stringify({
-                    username:myform.username.value,
-                    password:myform.password.value,
+                    name:myform.name.value,
+                    content:myform.content.value,
                 })
             })
                 .then(function(){
-                    location.href="listusers.html"
+                    location.href="listrules.html"
                 });
         }
     </script>
