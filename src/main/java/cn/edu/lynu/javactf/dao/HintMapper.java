@@ -6,17 +6,19 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import cn.edu.lynu.javactf.model.Challenge;
-import cn.edu.lynu.javactf.model.ChallengeExtended;
 import cn.edu.lynu.javactf.model.Hint;
 
 @Mapper
 public interface HintMapper {
 	
-	@Select("SELECT hint.*, challenge.name as challenge_name FROM hint,challenge where hint.challenge_id=challenge.id")
+	@Select("SELECT hint.*, challenge.id as challenge_id, challenge.name as challenge_name FROM hint,challenge where hint.challenge_id=challenge.id")
+	@Results({@Result(column="challenge_id", property="challenge.id"),
+		@Result(column="challenge_name", property="challenge.name")	})
 	List<Hint> getAllHints();
 	
 	@Select("SELECT hint.*, challenge_id as challengeId FROM hint WHERE ID=#{id}")
@@ -26,8 +28,8 @@ public interface HintMapper {
 	int deleteHintById(@Param("id")int id);
 	
 	@Insert("INSERT INTO hint(challenge_id ,title, content) VALUES (#{hint.challenge.id}, #{hint.title}, #{hint.content} )")
-	int insertHint(@Param("hint")Hint hint);
+	int insertHint(@Param("hint") Hint hint);
 	
 	@Update("UPDATE hint SET title=#{hint.title}, CONTENT=#{hint.content}, CHALLENGE_ID=#{hint.challenge.id} WHERE ID = #{hint.id}")
-	int updateHint(@Param("hint")Hint hint);
+	int updateHint(@Param("hint") Hint hint);
 }

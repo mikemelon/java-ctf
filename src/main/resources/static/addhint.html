@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <style>
+        body{
+            margin:0;
+            padding 0;
+            font-size: 12px;
+        }
+    </style>
+    <title>添加提示</title>
+</head>
+<body>
+    <form name="myform" action="addhint" method="post">
+        <label for="title">提示名称：</label> <input name="title" id="title" type="text" placeholder="提示名">
+        <label for="content">提示名称：</label> <input name="content" id="content" type="text" placeholder="提示内容">
+        <button id="addbutton" name="addbutton"  type="button" onclick="add()">新增提示</button>
+    </form>
+    <script>
+        function add(){
+            fetch("hint",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({
+                	title:myform.title.value,
+                	content:myform.content.value,
+                })
+            })
+                .then(function(){
+                    location.href="listhints.html"
+                });
+        }
+    </script>
+</body>
+</html>

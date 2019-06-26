@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/vue/dist/vue.min.js"></script>
+</head>
+<body>
+<table id="testTable" class="table table-striped table-bordered" style="width:80%; margin: 0 auto;" v-if="havedata">
+    <caption>提示列表</caption>
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>提示名</th>
+        <th>提示内容</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="template" v-for="item in hints" :key="item.id">
+        <td>{{item.id}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.content}}</td>
+        <td id="operation">
+        <input type='button' class="btn btn-default" value='更新' @click='updateHint(item.id)'>
+        <input type='button' class="btn btn-danger" value='删除' @click='deleteHint(item.id)'></td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    var app = new Vue({
+        el: "#testTable",
+        data: {
+        	hints: [],
+            havedata: false,
+        },
+        methods: {
+        	updateHint: function (id) {
+        		updateHint(id);
+            },
+            deleteHint: function (id) {
+            	deleteHint(id);
+            }
+        },
+    });
+
+    getAll();
+
+    function getAll() {
+        fetch("hints")
+            .then((resp) => {
+                return resp.json();
+            })
+            .then((hints) => {
+                app.hints = hints;
+                app.havedata = (app.hints.length > 0);
+            });
+    }
+    
+    function updateHint(id){
+    	location.href="updatehint.html?id="+id;
+    }
+
+    function deleteHint(id){
+        fetch("hints/"+id,{method:"DELETE"})
+            .then((resp)=>{
+                getAll();
+            });
+    }
+
+</script>
+</body>
+</html>

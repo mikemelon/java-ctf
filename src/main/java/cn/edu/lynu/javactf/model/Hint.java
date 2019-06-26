@@ -6,7 +6,6 @@ import lombok.Data;
 public class Hint {
 	private int id;
 	private Challenge challenge;
-	private int challengeId;
 	private String title;
 	private String content;
 }
